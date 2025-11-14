@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Connexion BDD";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<!-- TEST -->
+<div class="mb-4">
+    <button id="btnTestBdd"
+            type="button"
+            class="btn btn-primary btn-lg"
+            data-url="@Url.Action("TesterConnexion", "Bdd")"
+            data-method="POST">
+        Tester la connexion
+    </button>
+
+    <div id="spinnerTest" class="spinner-border text-primary ms-3" role="status" style="display:none;">
+        <span class="visually-hidden">Chargement...</span>
+    </div>
+
+    <p id="resultatTest" class="mt-3 fs-5"></p>
+</div>
+
+<!-- INSERT avec champs Nom / Password -->
+<div class="mt-4">
+
+    <div class="mb-3">
+        <label for="nomInsert" class="form-label">Nom</label>
+        <input id="nomInsert" class="form-control" placeholder="Entrez le nom">
+    </div>
+
+    <div class="mb-3">
+        <label for="passwordInsert" class="form-label">Password</label>
+        <input id="passwordInsert" type="password" class="form-control" placeholder="Entrez le mot de passe">
+    </div>
+
+    <button id="btnInsertBdd"
+            type="button"
+            class="btn btn-success btn-lg"
+            data-url="@Url.Action("Insert", "Bdd")"
+            data-method="POST">
+        Insertion
+    </button>
+
+    <div id="spinnerInsert" class="spinner-border text-success ms-3" role="status" style="display:none;">
+        <span class="visually-hidden">Chargement...</span>
+    </div>
+
+    <p id="resultatInsert" class="mt-3 fs-5"></p>
+</div>
+
+@section Scripts {
+    <script src="~/js/GestionBdd.js" asp-append-version="true"></script>
+}
