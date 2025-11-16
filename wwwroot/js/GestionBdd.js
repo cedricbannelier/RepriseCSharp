@@ -22,9 +22,30 @@
 
             //Si on clique sur le bouton d'insertion, on lit les champs Nom + Password
             if (btn.id === "btnInsertBdd") {
+
+                const userlogin = document.getElementById("nomInsert")?.value.trim() ?? "";
+                const userpwd = document.getElementById("passwordInsert")?.value ?? "";
+                const userenable = true;
+
+                // Validation client simple
+                if (!userlogin) {
+                    spinner.style.display = "none";
+                    btn.disabled = false;
+                    resultat.textContent = "Veuillez saisir un nom.";
+                    return;
+                }
+                if (!userpwd) {
+                    spinner.style.display = "none";
+                    btn.disabled = false;
+                    resultat.textContent = "Veuillez saisir un mot de passe.";
+                    return;
+                }
+
                 body = {
-                    nom: document.getElementById("nomInsert").value.trim(),
-                    password: document.getElementById("passwordInsert").value.trim()
+                    userlogin: userlogin,
+                    userpwd: userpwd,
+                    userenable: true
+                    
                 };
             }
 

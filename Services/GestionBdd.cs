@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using MySqlConnector; // ou MySql.Data.MySqlClient si tu utilises MySql.Data
 using MonSiteMvc.Models;
+using BCrypt.Net;
 
 namespace MonSiteMvc.Services
 {
@@ -37,9 +38,11 @@ namespace MonSiteMvc.Services
         {
             try
             {
-                string nom = dto.Nom ?? "";
-                int pwd = dto.Pwd;
-                bool enable = dto.Enable;
+                string nom = dto.Userlogin ?? "";
+                string pwd = dto.Userpwd;
+                bool enable = dto.Userenable;
+
+                string pwdHash = BCrypt.Net.BCrypt.HashPassword(pwd);
 
                 await using var connection = new MySqlConnection(_connectionString);
                 await connection.OpenAsync();
@@ -47,12 +50,12 @@ namespace MonSiteMvc.Services
                 await using var cmd = connection.CreateCommand();
                 cmd.CommandText = "INSERT INTO USER (USERLOGIN, USERPWD, USERENABLE) VALUES (@nom, @pwd, @enable)";
                 cmd.Parameters.AddWithValue("@nom", nom);
-                cmd.Parameters.AddWithValue("@pwd", pwd);
+                cmd.Parameters.AddWithValue("@pwd", pwdHash);
                 cmd.Parameters.AddWithValue("@enable", enable);
 
                 var nb = await cmd.ExecuteNonQueryAsync();
 
-                return (true, $"✅ Insertion réussie ({nb} ligne(s) ajoutée(s)).");
+                return (true, $"✅ Insertion réussie ({nb} ligne ajoutée).");
             }
             catch (Exception ex)
             {

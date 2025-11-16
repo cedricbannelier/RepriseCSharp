@@ -2,8 +2,8 @@
 {
     public class InsertDto
     {
-        public string Nom { get; set; } = "";
-        public int Pwd { get; set; }
-        public bool Enable { get; set; }
+        public string Userlogin { get; set; } = "";
+        public string Userpwd { get; set; } = "";
+        public bool Userenable { get; set; } = true;
     }
 }
